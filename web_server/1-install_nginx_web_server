@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# Bash script to configure a new Ubuntu machine with Nginx
+# - Installs Nginx on web-01 server
+# - Configures Nginx to listen on port 80
+# - Ensures that querying Nginx at its root ("/") returns a page containing the string "Holberton School"
+# - The server web01 returns 200 when querying "/"
 
 # Update package list
 sudo apt-get update
@@ -15,6 +20,12 @@ sudo sed -i 's/80 default_server/80 default_server;/g' /etc/nginx/sites-availabl
 # Reload nginx configuration (since systemctl is not allowed)
 sudo /etc/init.d/nginx reload
 
-# Display a message indicating the script execution is complete
-echo "Nginx installation and configuration completed."
+# Ensure web-01 returns 200 when querying "/"
+response_code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/)
+if [ "$response_code" == "200" ]; then
+  echo "Nginx installation and configuration completed successfully. Server returns 200 when querying '/'."
+else
+  echo "There was an issue with the Nginx configuration. Server does not return 200 when querying '/'."
+fi
+
 
