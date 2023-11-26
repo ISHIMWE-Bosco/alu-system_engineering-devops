@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 # Bash script to configure a new Ubuntu machine with Nginx
 sudo apt-get update
-apt-get -y install nginx
-
+sudo apt-get install nginx -y
 # Creating index.html page
-echo "Holberton School" > /var/www/html/index.html
+echo "Holberton School" | sudo tee /var/www/html/index.html
 
 # Checking if Nginx is running
 state=$(pgrep nginx)
